@@ -1,10 +1,6 @@
 class SortList:
-    sorting_algorithms = {
-        'bubble':buble_sort,
-        'insertion':insertion_sort,
-        'merge':merge_sort,
-        'quick':quick_sort
-    }
+    
+    sorting_algorithms = {'bubble': bubble_sort, 'insertion': insertion_sort, 'merge': merge_sort, 'quick': quick_sort}
     
     def __init__(self, cont: list):
         self.cont = cont
@@ -25,6 +21,7 @@ class SortList:
             while 0 < idx and self.cont[idx] < self.cont[idx - 1]:
                 self.cont[j], self.cont[j-1] = self.cont[j-1], self.cont[j]
                 idx -= 1
+
         return self.cont
 
 
@@ -39,7 +36,7 @@ class SortList:
 
             i = j = k = 0
             
-            while i < len(L) and j < len(R)
+            while i < len(L) and j < len(R):
                 if L[i] < R[j]:
                     self.cont[k] = L[i]
                     i += 1
@@ -48,15 +45,15 @@ class SortList:
                     j += 1
                 k += 1
             
-             while i < len(L):
-                 self.cont[k] = L[i]
-                 i += 1
-                 k += 1
+            while i < len(L):
+                self.cont[k] = L[i]
+                i += 1
+                k += 1
 
-             while j < len(R):
-                 self.cont[k] = R[j]
-                 j += 1
-                 k += 1
+            while j < len(R):
+                self.cont[k] = R[j]
+                j += 1
+                k += 1
         return self.cont
 
     
@@ -78,9 +75,11 @@ class SortList:
         else: 
             return array
     
+    
     def sorting(self, algm: str):
         return sorting_algorithms.get(algm) 
-
+        #return sorting_algorithms[algm]()
+       
 
 if __name__ == '__main__':
     exp = SortList([45,1,3,7,6,59,42,22,11,6])
