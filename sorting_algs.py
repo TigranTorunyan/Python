@@ -1,6 +1,6 @@
 class SortList:
     
-    sorting_algorithms = {'bubble': bubble_sort, 'insertion': insertion_sort, 'merge': merge_sort, 'quick': quick_sort}
+   # sorting_algorithms = {'bubble':bubble_sort, 'insertion': insertion_sort, 'merge': merge_sort, 'quick': quick_sort}
     
     def __init__(self, cont: list):
         self.cont = cont
@@ -10,16 +10,17 @@ class SortList:
         length = len(self.cont)
         for i in range(length):
             for j in range(length - 1):
-               if self.cont[j] > slef.cont[j+1]:
+               if self.cont[j] > self.cont[j+1]:
                    self.cont[j], self.cont[j+1] = self.cont[j+1], self.cont[j]
         return self.cont
 
  
     def insertion_sort(self):
         length = len(self.cont)
+       
         for idx in range(1, length):
             while 0 < idx and self.cont[idx] < self.cont[idx - 1]:
-                self.cont[j], self.cont[j-1] = self.cont[j-1], self.cont[j]
+                self.cont[idx], self.cont[idx-1] = self.cont[idx-1], self.cont[idx]
                 idx -= 1
 
         return self.cont
@@ -31,8 +32,10 @@ class SortList:
             L = self.cont[:mid]
             R = self.cont[mid:]
             
-            merge_sort(L)
-            merge_sort(R)
+            leftsorter = SortList(L)
+            leftsorter.merge_sort()
+            rightsorter = SortList(R)
+            rightsorter.merge_sort()
 
             i = j = k = 0
             
@@ -57,40 +60,45 @@ class SortList:
         return self.cont
 
     
-    def quick_sort(self):
-        less = []
-        equal = []
-        greater = []
+    def quick_sort(self, start, end):
+        if start < end:
+            pivot = self.partition(self.cont,start,end)
+            self.quick_sort(start,pivot-1)
+            self.quick_sort(pivot+1,end)
 
-        if len(array) > 1:
-            pivot = array[0]
-            for x in array:
-                if x < pivot:
-                    less.append(x)
-                elif x == pivot:
-                    equal.append(x)
-                elif x > pivot:
-                    greater.append(x)
-            return quick_sort(less) + equal + quick_sort(greater)  
-        else: 
-            return array
+    def partition(self,array,start,end):
+        x = array[end]
+        i = start-1
+        for j in range(start, end+1, 1):
+             if array[j] <= x:
+                 i += 1
+                 if i<j:
+                     z = array[i]
+                     array[i] = array[j]
+                     array[j] = z    
+        return i
     
     
     def sorting(self, algm: str):
-        return sorting_algorithms.get(algm) 
+        return self.algm() 
         #return sorting_algorithms[algm]()
        
 
+    def __repr__(self):
+        return "{0}".format(self.cont)
+
 if __name__ == '__main__':
-    exp = SortList([45,1,3,7,6,59,42,22,11,6])
-    exp.sorting('merge')
-    print(exp)
-    ex = SortList([45,1,3,7,6,22,11,9])
-    ex.sorting('bubble')
+    l = [45,1,3,7,6,59,42,22,11,6]
+    exp = SortList(l)
+    print("BEFORE -", exp)
+    exp.merge_sort()
+    print("AFTER - ", exp)
+    '''ex = SortList([45,1,3,7,6,22,11,9])
+    ex.sorting('bubble_sort')
     print(ex)
     p = SortList([1,3,7,6,59,42,22,11,6])
-    p.sorting('quick')
+    p.sorting('quick_sort')
     print(p)
     e = SortList([15,45,1,3,7,6,59,42,22,11,6])
-    e.sorting('insertion') 
-    print(e)      
+    e.sorting('insertion_sort') 
+    print(e)'''      
